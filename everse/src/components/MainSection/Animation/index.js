@@ -1,10 +1,11 @@
-import React, { useRef, Suspense } from 'react';
+import React, { useRef, Suspense, useEffect } from 'react';
 import * as THREE from 'three';
 import { Canvas, extend, useFrame, useLoader } from '@react-three/fiber';
 import { shaderMaterial, OrbitControls } from '@react-three/drei';
 import glsl from 'babel-plugin-glsl/macro';
 import Font from './Arrow_Serif.json';
 import { Text } from "troika-three-text";
+import gsap from 'gsap';
 extend({ Text });
 const BlobShaderMaterial = shaderMaterial(
     //Uniform
@@ -86,8 +87,8 @@ const Thing = () => {
 
     return (
         <mesh>
-            <icosahedronBufferGeometry args={[1, 64]} />
-            <blobShaderMaterial ref={ref} />
+            <icosahedronBufferGeometry args={[1, 64]} attach="geometry" />
+            <blobShaderMaterial ref={ref} attach="material" />
         </mesh>
     );
 }
@@ -181,7 +182,7 @@ const LogoShaderMaterial = shaderMaterial(
     {
         uTexture: new THREE.Texture(),
         uTime: 0,
-        uDistortionMultiplier: 5
+        uDistortionMultiplier: 0
     },
     //Vertex shader
     glsl`
@@ -229,8 +230,8 @@ const LogoShaderMaterial = shaderMaterial(
         vUv = uv;
         gl_PointSize = 2.;
         vec3 distortion = vec3(position.x * 2., position.y, 1.) * curlNoise(vec3(
-            position.x * 0.02 + uTime*0.1, 
-            position.y * 0.2 + uTime*0.1,
+            position.x * 0.7 , 
+            position.y * 0.7 + uTime*0.1,
             (position.x * position.y)*0.02)) * uDistortionMultiplier;
         vec3 finalPos = position + distortion;
         vec4 modelViewPosition = modelViewMatrix * vec4(finalPos, 1.0);
@@ -258,23 +259,24 @@ const LogoAnimation = () => {
     const [image] = useLoader(THREE.TextureLoader, ["everse.png"]);
     // const [image] = useLoader(THREE.TextureLoader, ["code.jpg"]);
     const ref = useRef();
-    useFrame(({clock}) => {
+    useFrame(({ clock }) => {
         const elapsed = clock.getElapsedTime();
         ref.current.uTime = elapsed;
-        if(ref.current.uDistortionMultiplier > 0){
-            ref.current.uDistortionMultiplier -= elapsed * 0.01;
-            console.log(ref.current.uDistortionMultiplier);
-        }else{
-            ref.current.uDistortionMultiplier = 0;
-        }
     })
-    return (
-        <points>
-            <planeBufferGeometry args={[1.33 * 5, 1 * 5, 1890/8, 1417/8]} attach="geometry" />
-            {/* <planeBufferGeometry args={[1280/853, 1, 1280/4, 853/4]} attach="geometry" /> */}
-            <logoShaderMaterial attach="material" uTexture={image} ref={ref}/>
-        </points>
+    useEffect(()=>{
+        const t1 = gsap.timeline();
+        t1.fromTo(ref.current, {uDistortionMultiplier: 0.1}, { delay: 1,duration: 3, uDistortionMultiplier: 7});
+        t1.to(ref.current, {duration: 2 ,uDistortionMultiplier: 0});
+    })
 
+    return (
+        <>
+            <points>
+                <planeBufferGeometry args={[1.33 * 5, 1 * 5, 1890 / 8, 1417 / 8]} attach="geometry" />
+                {/* <planeBufferGeometry args={[1280/853, 1, 1280/4, 853/4]} attach="geometry" /> */}
+                <logoShaderMaterial attach="material" uTexture={image} ref={ref} />
+            </points>
+        </>
     )
 }
 const Animation = () => {
@@ -287,14 +289,16 @@ const Animation = () => {
 
 const Scene = () => {
     return (
-        <Canvas camera={[0, 0, 0]}>
-            {/* <OrbitControls enablePan={true} enableZoom={true} /> */}
-            <Suspense fallback={null}>
-                {/* <Thing /> */}
-                {/* <TextAnimation /> */}
-                <LogoAnimation />
-            </Suspense>
-        </Canvas>
+        <>
+            <Canvas camera={[0, 0, 0]}>
+                {/* <OrbitControls enablePan={true} enableZoom={true} /> */}
+                <Suspense fallback={null}>
+                    {/* <Thing /> */}
+                    {/* <TextAnimation /> */}
+                    <LogoAnimation />
+                </Suspense>
+            </Canvas>
+        </>
     )
 };
 
