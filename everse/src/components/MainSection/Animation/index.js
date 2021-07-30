@@ -180,7 +180,8 @@ const LogoShaderMaterial = shaderMaterial(
     //Uniform
     {
         uTexture: new THREE.Texture(),
-        uTime: 0
+        uTime: 0,
+        uDistortionMultiplier: 5
     },
     //Vertex shader
     glsl`
@@ -222,6 +223,7 @@ const LogoShaderMaterial = shaderMaterial(
 
     uniform sampler2D uTexture;
     uniform float uTime;
+    uniform float uDistortionMultiplier;
     varying vec2 vUv;
     void main() {  
         vUv = uv;
@@ -229,7 +231,7 @@ const LogoShaderMaterial = shaderMaterial(
         vec3 distortion = vec3(position.x * 2., position.y, 1.) * curlNoise(vec3(
             position.x * 0.02 + uTime*0.1, 
             position.y * 0.2 + uTime*0.1,
-            (position.x * position.y)*0.02));
+            (position.x * position.y)*0.02)) * uDistortionMultiplier;
         vec3 finalPos = position + distortion;
         vec4 modelViewPosition = modelViewMatrix * vec4(finalPos, 1.0);
 
@@ -257,7 +259,14 @@ const LogoAnimation = () => {
     // const [image] = useLoader(THREE.TextureLoader, ["code.jpg"]);
     const ref = useRef();
     useFrame(({clock}) => {
-        ref.current.uTime = clock.getElapsedTime();
+        const elapsed = clock.getElapsedTime();
+        ref.current.uTime = elapsed;
+        if(ref.current.uDistortionMultiplier > 0){
+            ref.current.uDistortionMultiplier -= elapsed * 0.01;
+            console.log(ref.current.uDistortionMultiplier);
+        }else{
+            ref.current.uDistortionMultiplier = 0;
+        }
     })
     return (
         <points>
