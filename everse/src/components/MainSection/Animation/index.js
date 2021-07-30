@@ -6,6 +6,8 @@ import glsl from 'babel-plugin-glsl/macro';
 import Font from './Arrow_Serif.json';
 import { Text } from "troika-three-text";
 import gsap from 'gsap';
+import ScrollTrigger from 'gsap/ScrollTrigger';
+gsap.registerPlugin(ScrollTrigger);
 extend({ Text });
 const BlobShaderMaterial = shaderMaterial(
     //Uniform
@@ -182,7 +184,7 @@ const LogoShaderMaterial = shaderMaterial(
     {
         uTexture: new THREE.Texture(),
         uTime: 0,
-        uDistortionMultiplier: 0
+        uDistortionMultiplier: 0.05
     },
     //Vertex shader
     glsl`
@@ -230,8 +232,8 @@ const LogoShaderMaterial = shaderMaterial(
         vUv = uv;
         gl_PointSize = 2.;
         vec3 distortion = vec3(position.x * 2., position.y, 1.) * curlNoise(vec3(
-            position.x * 0.7 , 
-            position.y * 0.7 + uTime*0.1,
+            position.x  , 
+            position.y  + uTime*0.1,
             (position.x * position.y)*0.02)) * uDistortionMultiplier;
         vec3 finalPos = position + distortion;
         vec4 modelViewPosition = modelViewMatrix * vec4(finalPos, 1.0);
@@ -265,8 +267,8 @@ const LogoAnimation = () => {
     })
     useEffect(()=>{
         const t1 = gsap.timeline();
-        t1.fromTo(ref.current, {uDistortionMultiplier: 0.1}, { delay: 1,duration: 3, uDistortionMultiplier: 7});
-        t1.to(ref.current, {duration: 2 ,uDistortionMultiplier: 0});
+        t1.fromTo(ref.current, {uDistortionMultiplier: 0.05}, { delay: 1,duration: 2, uDistortionMultiplier: 7});
+        t1.to(ref.current, {delay:1, duration: 2 ,uDistortionMultiplier: 0.05});
     })
 
     return (
