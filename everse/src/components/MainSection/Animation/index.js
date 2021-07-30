@@ -261,7 +261,7 @@ const LogoAnimation = () => {
     })
     return (
         <points>
-            <planeBufferGeometry args={[1.33 * 4, 1 * 4, 1890/8, 1417/8]} attach="geometry" />
+            <planeBufferGeometry args={[1.33 * 5, 1 * 5, 1890/8, 1417/8]} attach="geometry" />
             {/* <planeBufferGeometry args={[1280/853, 1, 1280/4, 853/4]} attach="geometry" /> */}
             <logoShaderMaterial attach="material" uTexture={image} ref={ref}/>
         </points>
@@ -279,7 +279,7 @@ const Animation = () => {
 const Scene = () => {
     return (
         <Canvas camera={[0, 0, 0]}>
-            <OrbitControls enablePan={true} enableZoom={true} />
+            {/* <OrbitControls enablePan={true} enableZoom={true} /> */}
             <Suspense fallback={null}>
                 {/* <Thing /> */}
                 {/* <TextAnimation /> */}
