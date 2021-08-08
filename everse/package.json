@@ -9,6 +9,7 @@
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
     "babel-plugin-glsl": "^1.0.0",
+    "eslint-plugin-react-hooks": "^4.2.1-alpha-b9934d6db-20210805",
     "glsl-noise": "0.0.0",
     "glsl-rotate": "^1.1.0",
     "glslify": "^7.1.1",

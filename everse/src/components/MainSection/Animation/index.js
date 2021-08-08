@@ -1,4 +1,4 @@
-import React, { useRef, Suspense, useEffect } from 'react';
+import React, { useRef, Suspense, useEffect, useState } from 'react';
 import * as THREE from 'three';
 import { Canvas, extend, useFrame, useLoader } from '@react-three/fiber';
 import { shaderMaterial, OrbitControls } from '@react-three/drei';
@@ -258,24 +258,34 @@ const LogoShaderMaterial = shaderMaterial(
 extend({ LogoShaderMaterial });
 
 const LogoAnimation = () => {
+    const [animated, setAnimated] = useState(false);
     const [image] = useLoader(THREE.TextureLoader, ["everse.png"]);
-    // const [image] = useLoader(THREE.TextureLoader, ["code.jpg"]);
     const ref = useRef();
     useFrame(({ clock }) => {
         const elapsed = clock.getElapsedTime();
         ref.current.uTime = elapsed;
     })
     useEffect(()=>{
-        const t1 = gsap.timeline();
-        t1.fromTo(ref.current, {uDistortionMultiplier: 0.05}, { delay: 1,duration: 2, uDistortionMultiplier: 7});
-        t1.to(ref.current, {delay:1, duration: 2 ,uDistortionMultiplier: 0.05});
-    })
-
+        if(!animated){
+            const t1 = gsap.timeline();
+            t1.fromTo(ref.current, {uDistortionMultiplier: 0.05}, { delay: 1,duration: 2, uDistortionMultiplier: 7});
+            t1.to(ref.current, {delay:0.5, duration: 2 ,uDistortionMultiplier: 0.05});
+            setAnimated(!animated);
+        }
+        
+    }, [animated])
+    document.body.onscroll = () =>{
+        // const percent = ((document.documentElement.scrollTop || document.body.scrollTop) /
+        // ((document.documentElement.scrollHeight ||
+        //     document.body.scrollHeight) -
+        //     document.documentElement.clientHeight));
+        // ref.current.uDistortionMultiplier = 0.05 + 10 * percent;
+        // console.log(percent);
+    }
     return (
         <>
             <points>
                 <planeBufferGeometry args={[1.33 * 5, 1 * 5, 1890 / 8, 1417 / 8]} attach="geometry" />
-                {/* <planeBufferGeometry args={[1280/853, 1, 1280/4, 853/4]} attach="geometry" /> */}
                 <logoShaderMaterial attach="material" uTexture={image} ref={ref} />
             </points>
         </>
@@ -284,7 +294,7 @@ const LogoAnimation = () => {
 const Animation = () => {
     return (
         <>
-            <Scene />
+                <Scene />
         </>
     )
 };
@@ -292,7 +302,7 @@ const Animation = () => {
 const Scene = () => {
     return (
         <>
-            <Canvas camera={[0, 0, 0]}>
+            <Canvas>
                 {/* <OrbitControls enablePan={true} enableZoom={true} /> */}
                 <Suspense fallback={null}>
                     {/* <Thing /> */}

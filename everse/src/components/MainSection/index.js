@@ -1,19 +1,30 @@
-import React from 'react'
+import React, {useState} from 'react'
 import Animation from './Animation';
-import './MainSection.css';
+
+import {MainContainer, MainBg, MainContent, MainH1, MainP, MainBtnWrapper, ArrowForward, ArrowRight} from './MainElements';
+import {Button} from '../ButtonElement';
 const MainSection = () => {
+    const [hover, setHover] = useState(false);
+    
+    const onHover = () => {
+        setHover(!hover);
+    }
     return (
         <>
-            <div className="container">
-                <Animation />
-            </div>
-            <div className="section">
-                <h1>A developer collective.</h1>
-            </div>
-            <div className="section">
-                <h1>Section 2.</h1>
-                <p>Laboris consectetur sit occaecat occaecat sit dolore anim exercitation laborum. Anim labore consequat nisi labore sit enim excepteur anim sit occaecat. Non anim enim tempor elit enim id ut ex voluptate nisi qui. Non sit sunt consequat tempor sint. Culpa aute excepteur labore velit id ipsum veniam pariatur.</p>
-            </div>
+            <MainContainer>
+                <MainBg>
+                    <Animation />
+                </MainBg>
+                <MainContent>
+                    <MainH1>A developer collective.</MainH1>
+                    <MainP>Developing modern, state of the art applications and websites</MainP>
+                    <MainBtnWrapper onMouseEnter={onHover} onMouseLeave={onHover}>
+                        <Button to="contact">
+                            Get started {hover ? <ArrowForward /> : <ArrowRight/>}
+                        </Button>
+                    </MainBtnWrapper>
+                </MainContent>
+            </MainContainer>
         </>
     )
 }
