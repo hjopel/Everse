@@ -27,7 +27,7 @@ export const homeObjTwo = {
     dark: false,
     primary: true,
     darkText: false,
-    img: require('../images/svg-1.svg').default,
+    img: require('../images/svg-4.svg').default,
 }
 export const homeObjThree = {
     id: 'services',
