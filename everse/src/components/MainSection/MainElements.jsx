@@ -20,7 +20,7 @@ export const MainBg = styled.div`
     width: 100%;
     height: 100%;
     overflow: hidden;
-    margin-top: -100px;
+    margin-top: -150px;
 `
 
 export const MainContent = styled.div`
