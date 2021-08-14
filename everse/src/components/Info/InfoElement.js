@@ -3,7 +3,6 @@ import styled from 'styled-components';
 export const InfoContainer = styled.div`
     color: #fff;
     background: ${({lightBg}) => (lightBg ? '#f9f9f9' : '#010606')};
-    overflow: hidden;
     @media screen and (max-width: 768px) {
         padding: 100px 0;
     }
@@ -17,7 +16,7 @@ export const InfoWrapper = styled.div`
     max-width: 1100px;
     margin-right: auto;
     margin-left: auto;
-    padding: 0 24 px;
+    padding: 0 24px;
     justify-content: center;
 `
 
@@ -47,7 +46,6 @@ export const TextWrapper = styled.div`
     max-width: 540px;
     padding-top: 0;
     padding-bottom: 60px;
-    overflow: hidden;
 `
 
 export const TopLine = styled.p`
@@ -58,7 +56,6 @@ export const TopLine = styled.p`
     letter-spacing: 1.4px;
     text-transform: uppercase;
     margin-bottom: 16px;
-    overflow: hidden;
 `
 
 export const Heading = styled.h1`
@@ -67,7 +64,6 @@ export const Heading = styled.h1`
     line-height: 1.1;
     font-weight: 600;
     color: ${({ lightText }) => (lightText ? '#f7f8fa' : '#010606')};
-    overflow: hidden;
     @media screen and (max-width: 480px){
         font-size: 32px;
     }

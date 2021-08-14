@@ -232,7 +232,7 @@ const LogoShaderMaterial = shaderMaterial(
         vUv = uv;
         gl_PointSize = 2.;
         vec3 distortion = vec3(position.x * 2., position.y, 1.) * curlNoise(vec3(
-            position.x  , 
+            position.x  + uTime * 0.05, 
             position.y  + uTime*0.1,
             (position.x * position.y)*0.02)) * uDistortionMultiplier;
         vec3 finalPos = position + distortion;

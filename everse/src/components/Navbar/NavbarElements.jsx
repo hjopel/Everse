@@ -2,16 +2,18 @@ import styled from 'styled-components';
 import { Link as LinkR } from 'react-router-dom';
 import { Link as LinkS } from 'react-scroll';
 export const Nav = styled.nav`
-    background: #000;
+    background: ${({scrollNav}) => (scrollNav ? '#000' : 'transparent')};
     height: 80px;
+    margin-top: -80px;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 1rem;
     position: sticky;
+    position: -webkit-sticky;
     top: 0;
     z-index: 10;
-
+    transition: 0.4s all ease-in-out;
     @media screen and (max-width: 960px) {
         transition: 0.8s all ease;
     }

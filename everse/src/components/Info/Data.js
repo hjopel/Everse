@@ -1,8 +1,8 @@
 export const homeObjOne = {
     id: 'about',
-    lightBg: true,
-    lightText: false,
-    lightTextDesc: false,
+    lightBg: false,
+    lightText: true,
+    lightTextDesc: true,
     topLine: 'About us',
     headline: 'A developer collective, eager to help',
     description: 'Dolor excepteur ut nisi sit dolore consectetur ullamco esse sint.',
@@ -10,15 +10,16 @@ export const homeObjOne = {
     imgStart: false,
     dark: true,
     primary: true,
-    darkText: true,
+    darkText: false,
     img: require('../images/svg-3.svg').default,
+    alt: 'about'
 }
 
 export const homeObjTwo = {
     id: 'work',
-    lightBg: false,
-    lightText: true,
-    lightTextDesc: true,
+    lightBg: true,
+    lightText: false,
+    lightTextDesc: false,
     topLine: 'Our work',
     headline: 'Veniam nulla sunt sint proident nisi ullamco.',
     description: 'Consequat non incididunt non exercitation laborum proident occaecat.',
@@ -26,21 +27,7 @@ export const homeObjTwo = {
     imgStart: true,
     dark: false,
     primary: true,
-    darkText: false,
-    img: require('../images/svg-4.svg').default,
-}
-export const homeObjThree = {
-    id: 'services',
-    lightBg: true,
-    lightText: false,
-    lightTextDesc: false,
-    topLine: 'Services',
-    headline: 'Et aute mollit nostrud cupidatat ut veniam officia do cillum.',
-    description: 'Qui aliqua Lorem consectetur in aliquip magna ad minim.',
-    buttonLabel: 'Learn more',
-    imgStart: false,
-    dark: true,
-    primary: true,
     darkText: true,
-    img: require('../images/svg-1.svg').default,
+    img: require('../images/svg-4.svg').default,
+    alt: 'work'
 }
