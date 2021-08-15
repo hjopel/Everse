@@ -7,6 +7,7 @@ import Font from './Arrow_Serif.json';
 import { Text } from "troika-three-text";
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
+import { EffectComposer, DepthOfField, Bloom, Noise, Vignette } from '@react-three/postprocessing'
 gsap.registerPlugin(ScrollTrigger);
 extend({ Text });
 const BlobShaderMaterial = shaderMaterial(
@@ -230,7 +231,7 @@ const LogoShaderMaterial = shaderMaterial(
     varying vec2 vUv;
     void main() {  
         vUv = uv;
-        gl_PointSize = 2.;
+        gl_PointSize = 1.5;
         vec3 distortion = vec3(position.x * 2., position.y, 1.) * curlNoise(vec3(
             position.x  + uTime * 0.05, 
             position.y  + uTime*0.1,
@@ -258,23 +259,18 @@ const LogoShaderMaterial = shaderMaterial(
 extend({ LogoShaderMaterial });
 
 const LogoAnimation = () => {
-    const [animated, setAnimated] = useState(false);
     const [image] = useLoader(THREE.TextureLoader, ["everse.png"]);
     const ref = useRef();
     useFrame(({ clock }) => {
         const elapsed = clock.getElapsedTime();
         ref.current.uTime = elapsed;
     })
-    useEffect(()=>{
-        if(!animated){
+    useEffect(() => {
             const t1 = gsap.timeline();
-            t1.fromTo(ref.current, {uDistortionMultiplier: 0.05}, { delay: 1,duration: 2, uDistortionMultiplier: 7});
-            t1.to(ref.current, {delay:0.5, duration: 2 ,uDistortionMultiplier: 0.05});
-            setAnimated(!animated);
-        }
-        
-    }, [animated])
-    document.body.onscroll = () =>{
+            t1.fromTo(ref.current, { uDistortionMultiplier: 0.05 }, { delay: 1, duration: 2, uDistortionMultiplier: 7 });
+            t1.to(ref.current, { delay: 0.5, duration: 2, uDistortionMultiplier: 0.05 });
+    }, [])
+    document.body.onscroll = () => {
         // const percent = ((document.documentElement.scrollTop || document.body.scrollTop) /
         // ((document.documentElement.scrollHeight ||
         //     document.body.scrollHeight) -
@@ -285,16 +281,23 @@ const LogoAnimation = () => {
     return (
         <>
             <points>
-                <planeBufferGeometry args={[1.33 * 5, 1 * 5, 1890 / 8, 1417 / 8]} attach="geometry" />
+                <planeBufferGeometry args={[1.33 * 5, 1 * 5, 1890 /6 , 1417 /6 ]} attach="geometry" />
                 <logoShaderMaterial attach="material" uTexture={image} ref={ref} />
             </points>
+            {/* <EffectComposer>
+                <DepthOfField focusDistance={0} focalLength={0.02} bokehScale={2} height={480} />
+                <Bloom luminanceThreshold={0} luminanceSmoothing={0.9} height={300} />
+                <Noise opacity={0.02} />
+                <Vignette eskil={false} offset={0.1} darkness={1.1} />
+            </EffectComposer> */}
+
         </>
     )
 }
 const Animation = () => {
     return (
         <>
-                <Scene />
+            <Scene />
         </>
     )
 };

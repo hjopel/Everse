@@ -28,8 +28,7 @@ const Footer = () => {
                         <MediaLogo to='/'>
                             everse.
                         </MediaLogo>
-                        <WebsiteRights> everse © {new Date().getFullYear()}  
-                        All rights reserved.</WebsiteRights>
+                        <WebsiteRights> everse © {new Date().getFullYear()} All rights reserved.</WebsiteRights>
                         <SocialIcons>
                             <SocialIconLink href="/" target="_blank" aria-label="Instagram">
                                 <FaInstagram />

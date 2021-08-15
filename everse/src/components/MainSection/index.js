@@ -16,8 +16,8 @@ const MainSection = () => {
                     <Animation />
                 </MainBg>
                 <MainContent>
-                    <MainH1>A developer collective.</MainH1>
-                    <MainP>Developing modern, state of the art applications and websites</MainP>
+                    <MainH1>A developer collective</MainH1>
+                    <MainP>...which simply enjoys informatics</MainP>
                     <MainBtnWrapper onMouseEnter={onHover} onMouseLeave={onHover}>
                         <Button to="contact">
                             Get started {hover ? <ArrowForward /> : <ArrowRight/>}
