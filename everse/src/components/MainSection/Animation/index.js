@@ -1,4 +1,4 @@
-import React, { useRef, Suspense, useEffect, useState } from 'react';
+import React, { useRef, Suspense, useEffect } from 'react';
 import * as THREE from 'three';
 import { Canvas, extend, useFrame, useLoader } from '@react-three/fiber';
 import { shaderMaterial, OrbitControls } from '@react-three/drei';
@@ -7,7 +7,10 @@ import Font from './Arrow_Serif.json';
 import { Text } from "troika-three-text";
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
-import { EffectComposer, DepthOfField, Bloom, Noise, Vignette } from '@react-three/postprocessing'
+import { a } from '@react-spring/three'
+import { useSpring } from "@react-spring/core"
+
+// import { EffectComposer, DepthOfField, Bloom, Noise, Vignette } from '@react-three/postprocessing'
 gsap.registerPlugin(ScrollTrigger);
 extend({ Text });
 const BlobShaderMaterial = shaderMaterial(
@@ -266,9 +269,9 @@ const LogoAnimation = () => {
         ref.current.uTime = elapsed;
     })
     useEffect(() => {
-            const t1 = gsap.timeline();
-            t1.fromTo(ref.current, { uDistortionMultiplier: 0.05 }, { delay: 1, duration: 2, uDistortionMultiplier: 7 });
-            t1.to(ref.current, { delay: 0.5, duration: 2, uDistortionMultiplier: 0.05 });
+        const t1 = gsap.timeline();
+        t1.fromTo(ref.current, { uDistortionMultiplier: 0.05 }, { delay: 1, duration: 2, uDistortionMultiplier: 7 });
+        t1.to(ref.current, { delay: 0.5, duration: 2, uDistortionMultiplier: 0.05 });
     }, [])
     document.body.onscroll = () => {
         // const percent = ((document.documentElement.scrollTop || document.body.scrollTop) /
@@ -278,43 +281,31 @@ const LogoAnimation = () => {
         // ref.current.uDistortionMultiplier = 0.05 + 10 * percent;
         // console.log(percent);
     }
+    // const styles = useSpring({
+    //     to: [{uDistortionMultiplier: 7.0}]
+    // });
+    
     return (
         <>
-            <points>
-                <planeBufferGeometry args={[1.33 * 5, 1 * 5, 1890 /6 , 1417 /6 ]} attach="geometry" />
+            <a.points>
+                <planeBufferGeometry args={[1.33 * 5, 1 * 5, 1890 / 8, 1417 / 8]} attach="geometry" />
                 <logoShaderMaterial attach="material" uTexture={image} ref={ref} />
-            </points>
-            {/* <EffectComposer>
-                <DepthOfField focusDistance={0} focalLength={0.02} bokehScale={2} height={480} />
-                <Bloom luminanceThreshold={0} luminanceSmoothing={0.9} height={300} />
-                <Noise opacity={0.02} />
-                <Vignette eskil={false} offset={0.1} darkness={1.1} />
-            </EffectComposer> */}
+                
+            </a.points>
 
         </>
     )
 }
 const Animation = () => {
     return (
-        <>
-            <Scene />
-        </>
+        <Canvas mode="concurrent">
+            {/* <OrbitControls enablePan={true} enableZoom={true} /> */}
+            {/* <Thing /> */}
+            {/* <TextAnimation /> */}
+            <LogoAnimation />
+        </Canvas>
     )
 };
 
-const Scene = () => {
-    return (
-        <>
-            <Canvas>
-                {/* <OrbitControls enablePan={true} enableZoom={true} /> */}
-                <Suspense fallback={null}>
-                    {/* <Thing /> */}
-                    {/* <TextAnimation /> */}
-                    <LogoAnimation />
-                </Suspense>
-            </Canvas>
-        </>
-    )
-};
 
 export default Animation;

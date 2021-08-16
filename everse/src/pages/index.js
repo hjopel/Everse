@@ -7,20 +7,13 @@ import { homeObjOne, homeObjTwo } from '../components/Info/Data';
 import Services from '../components/Services';
 import Footer from '../components/Footer';
 const Home = () => {
-    const [isOpen, setIsOpen] = useState(false);
-
-    const toggleIsOpen = () => {
-        setIsOpen(!isOpen);
-    }
     return (
         <>
-            <Sidebar isOpen={isOpen} toggle={toggleIsOpen} />
-            <Navbar toggle={toggleIsOpen} />
+           
             <MainSection />
             <InfoSection {...homeObjOne} />
             <InfoSection {...homeObjTwo} />
             <Services />
-            <Footer />
         </>
     )
 }
