@@ -5,7 +5,7 @@ import Navbar from "./components/Navbar";
 import Footer from './components/Footer';
 import Sidebar from './components/Sidebar'
 import React, {useState} from 'react'
-import Contact from "./pages/contact";
+import ContactPage from "./pages/contact";
 
 function App() {
   const [isOpen, setIsOpen] = useState(false);
@@ -19,7 +19,7 @@ function App() {
       <Navbar toggle={toggleIsOpen} />
       <Switch>
         <Route path='/' component={Home} exact />
-        <Route path='/contact' component={Contact} exact />
+        <Route path='/contact' component={ContactPage} exact />
       </Switch>
       <Footer />
 
