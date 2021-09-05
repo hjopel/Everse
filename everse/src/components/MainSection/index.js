@@ -3,19 +3,21 @@ import Animation from './Animation';
 
 import {MainContainer, MainBg, MainContent, MainH1, MainP, MainBtnWrapper, ArrowForward, ArrowRight} from './MainElements';
 import {Button} from '../ButtonElement';
-const MainSection = () => {
+import { useLoader } from '@react-three/fiber';
+import * as THREE from 'three';
+const MainSection = ({logo}) => {
     const [hover, setHover] = useState(false);
     
     const onHover = () => {
         setHover(!hover);
     }
+        const [image] = useLoader(THREE.TextureLoader, ["everse.png"]);
+
     return (
         <>
             <MainContainer>
                 <MainBg>
-                <Suspense fallback={<span>loading...</span>}>
-                    <Animation />
-                </Suspense>
+                    <Animation logo={image}/>
                 </MainBg>
                 <MainContent>
                     <MainH1>A developer collective</MainH1>

@@ -188,7 +188,7 @@ const LogoShaderMaterial = shaderMaterial(
     {
         uTexture: new THREE.Texture(),
         uTime: 0,
-        uDistortionMultiplier: 0.05
+        uDistortionMultiplier: 0.0
     },
     //Vertex shader
     glsl`
@@ -261,8 +261,7 @@ const LogoShaderMaterial = shaderMaterial(
 
 extend({ LogoShaderMaterial });
 
-const LogoAnimation = () => {
-    const [image] = useLoader(THREE.TextureLoader, ["everse.png"]);
+const LogoAnimation = ({logo}) => {
     const ref = useRef();
     useFrame(({ clock }) => {
         const elapsed = clock.getElapsedTime();
@@ -270,7 +269,7 @@ const LogoAnimation = () => {
     })
     useEffect(() => {
         const t1 = gsap.timeline();
-        t1.fromTo(ref.current, { uDistortionMultiplier: 0.05 }, { delay: 1, duration: 2, uDistortionMultiplier: 7 });
+        t1.fromTo(ref.current, { uDistortionMultiplier: 0.0 }, { delay: 1, duration: 2, uDistortionMultiplier: 7 });
         t1.to(ref.current, { delay: 0.5, duration: 2, uDistortionMultiplier: 0.05 });
     }, [])
     document.body.onscroll = () => {
@@ -289,20 +288,20 @@ const LogoAnimation = () => {
         <>
             <a.points>
                 <planeBufferGeometry args={[1.33 * 5, 1 * 5, 1890 / 8, 1417 / 8]} attach="geometry" />
-                <logoShaderMaterial attach="material" uTexture={image} ref={ref} />
+                <logoShaderMaterial attach="material" uTexture={logo} ref={ref} />
                 
             </a.points>
 
         </>
     )
 }
-const Animation = () => {
+const Animation = ({logo}) => {
     return (
         <Canvas mode="concurrent">
             {/* <OrbitControls enablePan={true} enableZoom={true} /> */}
             {/* <Thing /> */}
             {/* <TextAnimation /> */}
-            <LogoAnimation />
+            <LogoAnimation logo={logo}/>
         </Canvas>
     )
 };

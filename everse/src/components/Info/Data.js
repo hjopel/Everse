@@ -11,7 +11,7 @@ export const homeObjOne = {
     dark: true,
     primary: true,
     darkText: false,
-    img: require('../images/svg-3.svg').default,
+    img: require('../images/collective.svg').default,
     alt: 'about'
 }
 

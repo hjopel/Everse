@@ -4,26 +4,26 @@ import Home from './pages';
 import Navbar from "./components/Navbar";
 import Footer from './components/Footer';
 import Sidebar from './components/Sidebar'
-import React, {useState} from 'react'
-import ContactPage from "./pages/contact";
+import React, { useState, Suspense } from 'react'
 
 function App() {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleIsOpen = () => {
     setIsOpen(!isOpen);
-}
+  }
+
   return (
     <Router>
       <Sidebar isOpen={isOpen} toggle={toggleIsOpen} />
       <Navbar toggle={toggleIsOpen} />
       <Switch>
-        <Route path='/' component={Home} exact />
-        <Route path='/contact' component={ContactPage} exact />
+          <Route path='/' component={Home} exact />
+        {/* <Route path='/contact' component={ContactPage} exact /> */}
       </Switch>
       <Footer />
 
-    </Router>      
+    </Router>
   );
 }
 
